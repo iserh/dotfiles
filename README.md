@@ -9,7 +9,7 @@ ln -s ~/dotfiles/.editorconfig ~/.editorconfig
 
 If not already done you also have to install Vundle
 ```sh
-git clone git@github.com:VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 ```
 
 Finally got into a vim session and type
