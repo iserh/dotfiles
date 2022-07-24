@@ -11,6 +11,10 @@ If not already done you also have to install Vundle
 ```sh
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 ```
+and tpm
+```sh
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+```
 
 Finally got into a vim session and type
 ```sh
