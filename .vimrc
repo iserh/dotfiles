@@ -13,6 +13,7 @@ Plugin 'davidhalter/jedi-vim'
 Plugin 'ervandew/supertab'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'editorconfig/editorconfig-vim'
+Plugin 'arithran/vim-delete-hidden-buffers'
 
 
 " All of your Plugins must be added before the following line
@@ -28,6 +29,7 @@ filetype plugin indent on    " required
 " :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
 "
 " see :h vundle for more details or wiki for FAQ
+nnoremap <F5> :DeleteHiddenBuffers<CR>
 let g:SuperTabDefaultCompletionType = "context"
 let g:jedi#popup_on_dot = 0
 
@@ -125,3 +127,21 @@ set mouse+=a
 " nnoremap <C-L> <C-W><C-L>
 " nnoremap <C-H> <C-W><C-H>
 
+" pwd follows file that is edited
+set autochdir
+" hightlight search items
+set hlsearch
+nnoremap <Leader><space> :noh<cr>
+set nowrap
+nnoremap <silent><expr> <f2> ':set wrap! go'.'-+'[&wrap]."=b\r"
+
+nnoremap <S-j> :m .+1<CR>==
+nnoremap <S-k> :m .-2<CR>==
+inoremap <S-j> <Esc>:m .+1<CR>==gi
+inoremap <S-k> <Esc>:m .-2<CR>==gi
+vnoremap <S-j> :m '>+1<CR>gv=gv
+vnoremap <S-k> :m '<-2<CR>gv=gv
+
+vnoremap < <gv
+vnoremap > >gv
+set pastetoggle=<F3>
