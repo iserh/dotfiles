@@ -32,6 +32,7 @@ filetype plugin indent on    " required
 nnoremap <F5> :DeleteHiddenBuffers<CR>
 let g:SuperTabDefaultCompletionType = "context"
 let g:jedi#popup_on_dot = 0
+let g:jedi#show_call_signatures = 0
 
 
 " -------------------------------------------------------------
@@ -135,13 +136,27 @@ nnoremap <Leader><space> :noh<cr>
 set nowrap
 nnoremap <silent><expr> <f2> ':set wrap! go'.'-+'[&wrap]."=b\r"
 
-nnoremap <S-j> :m .+1<CR>==
-nnoremap <S-k> :m .-2<CR>==
-inoremap <S-j> <Esc>:m .+1<CR>==gi
-inoremap <S-k> <Esc>:m .-2<CR>==gi
-vnoremap <S-j> :m '>+1<CR>gv=gv
-vnoremap <S-k> :m '<-2<CR>gv=gv
+
+" " Workaroung for alt key
+" let c='a'
+" while c <= 'z'
+"   exec "set <A-".c.">=\e".c
+"   exec "imap \e".c." <A-".c.">"
+"   let c = nr2char(1+char2nr(c))
+" endw
+" 
+" set timeout ttimeoutlen=50
+" 
+" nnoremap <A-j> :m .+1<CR>==
+" nnoremap <A-k> :m .-2<CR>==
+" inoremap <A-j> <Esc>:m .+1<CR>==gi
+" inoremap <A-k> <Esc>:m .-2<CR>==gi
+" vnoremap <A-j> :m '>+1<CR>gv=gv
+" vnoremap <A-k> :m '<-2<CR>gv=gv
 
 vnoremap < <gv
 vnoremap > >gv
 set pastetoggle=<F3>
+
+" allows find and replace in visual mode via C-r
+vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
