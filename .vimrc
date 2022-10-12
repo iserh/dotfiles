@@ -14,6 +14,9 @@ Plugin 'ervandew/supertab'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'arithran/vim-delete-hidden-buffers'
+Plugin 'djoshea/vim-autoread'
+
+set autoread
 
 
 " All of your Plugins must be added before the following line
@@ -105,6 +108,7 @@ set noerrorbells visualbell t_vb=
 " Enable mouse support. You should avoid relying on this too much, but it can
 " sometimes be convenient.
 set mouse+=a
+set ttymouse=sgr
 
 " Try to prevent bad habits like using the arrow keys for movement. This is
 " not the only possible bad habit. For example, holding down the h/j/k/l keys
@@ -144,9 +148,9 @@ nnoremap <silent><expr> <f2> ':set wrap! go'.'-+'[&wrap]."=b\r"
 "   exec "imap \e".c." <A-".c.">"
 "   let c = nr2char(1+char2nr(c))
 " endw
-" 
+"
 " set timeout ttimeoutlen=50
-" 
+"
 " nnoremap <A-j> :m .+1<CR>==
 " nnoremap <A-k> :m .-2<CR>==
 " inoremap <A-j> <Esc>:m .+1<CR>==gi
@@ -160,3 +164,6 @@ set pastetoggle=<F3>
 
 " allows find and replace in visual mode via C-r
 vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
+
+" treat justfile as yaml
+au BufNewFile,BufRead,BufReadPost justfile set syntax=yaml
