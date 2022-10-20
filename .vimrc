@@ -10,6 +10,7 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'davidhalter/jedi-vim'
+Plugin 'tpope/vim-fugitive'
 Plugin 'ervandew/supertab'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'editorconfig/editorconfig-vim'
