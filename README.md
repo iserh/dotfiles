@@ -15,7 +15,7 @@ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
 Go into a vim session and type `:PluginInstall`
 
-To use :FzfAg you also have to install Ag
+To use `:FzfAg` you also have to install Ag
 ```sh
 apt-get install silversearcher-ag
 ```
