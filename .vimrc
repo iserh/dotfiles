@@ -10,8 +10,6 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'joshdick/onedark.vim'
-Plugin 'vim-airline/vim-airline'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'ervandew/supertab'
 Plugin 'christoomey/vim-tmux-navigator'
@@ -60,9 +58,6 @@ let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
 " ----------------------------------------
 " Non-Plugin Settings
 " ----------------------------------------
-
-" color scheme
-color onedark
 
 " Turn on syntax highlighting.
 syntax on
@@ -140,8 +135,8 @@ set nowrap
 nnoremap <silent><expr> <f2> ':set wrap! go'.'-+'[&wrap]."=b\r"
 
 " reindent blocks
-" vnoremap < <gv
-" vnoremap > >gv
+vnoremap < <gv
+vnoremap > >gv
 
 " toggle paste mode
 set pastetoggle=<F3>
