@@ -1,10 +1,6 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
-if $TERM_PROGRAM != 'Apple_Terminal'
-    set termguicolors
-endif
-
 
 " ----------------------------------------
 " Plugins
@@ -60,7 +56,8 @@ let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
 " Non-Plugin Settings
 " ----------------------------------------
 
-" colorscheme
+let g:sonokai_style = 'default'
+let g:sonokai_better_performance = 1
 colorscheme sonokai
 
 " Turn on syntax highlighting.
