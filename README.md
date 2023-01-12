@@ -15,10 +15,6 @@ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
 Go into a vim session and type `:PluginInstall`
 
-*Optional:* To use `:FzfAg` (A nice fuzzy searcher inside vim) switch to the `feature/fzf`. You also have to install Ag SilverSearcher
-```sh
-apt-get install silversearcher-ag
-```
 
 ## Tmux
 Install tpm
@@ -27,6 +23,7 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 ```
 
 Then go into a tmux session and type `C-a I`
+
 
 ## GNOME terminal
 Adjust your GNOME terminal by following the instructions on https://github.com/0xcomposure/monokai-gnome-terminal
