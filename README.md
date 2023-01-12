@@ -39,3 +39,11 @@ cd monokai-gnome-terminal
 ./monokai-gnome-terminal/install.sh
 rm -rf monokai-gnome-terminal
 ```
+
+
+## Jupyter
+Using `jupyterthemes` like on https://medium.com/@rbmsingh/making-jupyter-dark-mode-great-5adaedd814db. Run
+```sh
+pip install jupyterthemes
+jt -t monokai -N -kl -cursw 5 -cursc r -cellw 95% -T
+```
