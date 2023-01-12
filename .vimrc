@@ -18,6 +18,8 @@ Plugin 'arithran/vim-delete-hidden-buffers'
 Plugin 'djoshea/vim-autoread'
 Plugin 'tpope/vim-fugitive'
 Plugin 'kien/ctrlp.vim'
+Plugin 'phanviet/vim-monokai-pro'
+Plugin 'sheerun/vim-polyglot'
 " Plugin 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 " Plugin 'junegunn/fzf.vim'
 
@@ -59,6 +61,10 @@ let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
 " Non-Plugin Settings
 " ----------------------------------------
 
+" colorscheme
+set termguicolors
+colorscheme monokai_pro
+
 " Turn on syntax highlighting.
 syntax on
 
@@ -67,6 +73,9 @@ set shortmess+=I
 
 " Show line numbers.
 set number
+
+" Highlight current line
+set cursorline
 
 " Always show the status line at the bottom, even if you only have one window open.
 set laststatus=2
@@ -87,8 +96,8 @@ set hidden
 " This setting makes search case-insensitive when all characters in the string
 " being searched are lowercase. However, the search becomes case-sensitive if
 " it contains any capital letters. This makes searching more convenient.
-set ignorecase
-set smartcase
+" set ignorecase
+" set smartcase
 
 " Enable searching as you type, rather than waiting till you press enter.
 set incsearch
@@ -140,6 +149,10 @@ vnoremap > >gv
 
 " toggle paste mode
 set pastetoggle=<F3>
+
+" terminal normal mode on <esc>
+tnoremap <Esc> <C-\><C-n>
+
 
 
 " ----------------------------------------
