@@ -26,5 +26,16 @@ Then go into a tmux session and type `C-a I`
 
 
 ## GNOME terminal
-Adjust your GNOME terminal by following the instructions on https://github.com/0xcomposure/monokai-gnome-terminal
+This section is following the instructions on https://github.com/0xcomposure/monokai-gnome-terminal:
 
+You need the dconf command (if you run a recent Gnome version).
+```sh
+sudo apt-get install dconf-cli
+```
+
+```sh
+git clone https://github.com/0xComposure/monokai-gnome-terminal
+cd monokai-gnome-terminal
+./monokai-gnome-terminal/install.sh
+rm -rf monokai-gnome-terminal
+```
