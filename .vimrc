@@ -1,6 +1,10 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
+if $TERM_PROGRAM != 'Apple_Terminal'
+    set termguicolors
+endif
+
 
 " ----------------------------------------
 " Plugins
@@ -18,10 +22,8 @@ Plugin 'arithran/vim-delete-hidden-buffers'
 Plugin 'djoshea/vim-autoread'
 Plugin 'tpope/vim-fugitive'
 Plugin 'kien/ctrlp.vim'
-Plugin 'phanviet/vim-monokai-pro'
+Plugin 'sainnhe/sonokai'
 Plugin 'sheerun/vim-polyglot'
-" Plugin 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-" Plugin 'junegunn/fzf.vim'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -53,17 +55,13 @@ nnoremap gdl :diffget //3<CR>
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
 
-" fzf
-" let g:fzf_command_prefix = 'Fzf'
-
 
 " ----------------------------------------
 " Non-Plugin Settings
 " ----------------------------------------
 
 " colorscheme
-set termguicolors
-colorscheme monokai_pro
+colorscheme sonokai
 
 " Turn on syntax highlighting.
 syntax on
