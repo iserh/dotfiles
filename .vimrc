@@ -1,6 +1,10 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
+if $TERM_PROGRAM != 'Apple_Terminal'
+    set termguicolors
+endif
+
 
 " ----------------------------------------
 " Plugins
@@ -18,7 +22,7 @@ Plugin 'arithran/vim-delete-hidden-buffers'
 Plugin 'djoshea/vim-autoread'
 Plugin 'tpope/vim-fugitive'
 Plugin 'kien/ctrlp.vim'
-Plugin 'sainnhe/sonokai'
+Plugin 'phanviet/vim-monokai-pro'
 Plugin 'sheerun/vim-polyglot'
 
 call vundle#end()            " required
@@ -56,9 +60,7 @@ let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
 " Non-Plugin Settings
 " ----------------------------------------
 
-let g:sonokai_style = 'default'
-let g:sonokai_better_performance = 1
-colorscheme sonokai
+colorscheme monokai_pro
 
 " Turn on syntax highlighting.
 syntax on
