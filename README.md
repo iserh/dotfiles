@@ -48,7 +48,7 @@ pip install jupyterthemes
 ```
 ```sh
 # for dark theme
-jt -t monokai -fs 100 -altp -tfs 12 -nfs 115 -cellw 95% -T
+jt -t monokai -fs 100 -tfs 12 -nfs 115 -cellw 95% -T
 # for light theme
-jt -t grade3 -fs 100 -altp -tfs 12 -nfs 115 -cellw 95% -T
+jt -t grade3 -fs 100 -tfs 12 -nfs 115 -cellw 95% -T
 ```
