@@ -45,10 +45,9 @@ rm -rf monokai-gnome-terminal
 Using `jupyterthemes` like on https://medium.com/@rbmsingh/making-jupyter-dark-mode-great-5adaedd814db. Run
 ```sh
 pip install jupyterthemes
+jt -t grade3 -fs 100 -tfs 12 -nfs 115 -cellw 95% -T
 ```
 ```sh
 # for dark theme
 jt -t monokai -fs 100 -tfs 12 -nfs 115 -cellw 95% -T
-# for light theme
-jt -t grade3 -fs 100 -tfs 12 -nfs 115 -cellw 95% -T
 ```
