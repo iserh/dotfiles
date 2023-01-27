@@ -15,6 +15,12 @@ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
 Go into a vim session and type `:PluginInstall`
 
+### OSX
+Make sure your on `osx` branch of this repo. After installing vim plugins run:
+```sh
+cp monokai_pro.vim ~/.vim/bundle/vim-monokai-pro/colors
+```
+
 
 ## Tmux
 Install tpm
