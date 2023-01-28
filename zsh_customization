@@ -1,5 +1,6 @@
 unsetopt share_history
 setopt no_share_history
 
+alias du-sort="du -sch * | sort -h"
 alias du-hidden="du -sch .[!.]* * | sort -h"
 
