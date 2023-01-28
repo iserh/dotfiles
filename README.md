@@ -15,12 +15,6 @@ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
 Go into a vim session and type `:PluginInstall`
 
-### OSX
-Make sure your on `osx` branch of this repo. After installing vim plugins run:
-```sh
-cp monokai_pro.vim ~/.vim/bundle/vim-monokai-pro/colors
-```
-
 
 ## Tmux
 Install tpm
@@ -44,6 +38,21 @@ git clone https://github.com/0xComposure/monokai-gnome-terminal
 cd monokai-gnome-terminal
 ./monokai-gnome-terminal/install.sh
 rm -rf monokai-gnome-terminal
+```
+
+
+## Apple terminal
+Make sure your on `osx` branch of this repo. After installing vim plugins run the following command to match the terminal background:
+```sh
+~/dotfiles/monokai_background.sh
+```
+
+
+## Oh-my-zsh
+Run the following command to install oh-my-zsh and setup the default `.zshrc`:
+```sh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+cp ~/dotfiles/.zshrc_default ~/.zshrc
 ```
 
 

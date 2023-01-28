@@ -1,0 +1,5 @@
+unsetopt share_history
+setopt no_share_history
+
+alias du-hidden="du -sch .[!.]* * | sort -h"
+
