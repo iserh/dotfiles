@@ -52,7 +52,9 @@ let g:jedi#show_call_signatures = 0
 " vim-fugitive
 nnoremap <leader>gd :Gvdiffsplit!<CR>
 nnoremap gdh :diffget //2<CR>
+nnoremap gdah :%diffget //2<CR>
 nnoremap gdl :diffget //3<CR>
+nnoremap gdal :%diffget //3<CR>
 
 " ctrlp
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
