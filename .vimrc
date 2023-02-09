@@ -155,6 +155,9 @@ set pastetoggle=<F3>
 " terminal normal mode on <esc>
 tnoremap <Esc> <C-\><C-n>
 
+" Full file path
+set statusline+=%F
+
 
 
 " ----------------------------------------
