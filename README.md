@@ -35,7 +35,6 @@ sudo apt-get install dconf-cli
 
 ```sh
 git clone https://github.com/0xComposure/monokai-gnome-terminal
-cd monokai-gnome-terminal
 ./monokai-gnome-terminal/install.sh
 rm -rf monokai-gnome-terminal
 ```
