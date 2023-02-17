@@ -66,3 +66,8 @@ jt -t grade3 -fs 100 -tfs 12 -nfs 115 -cellw 95% -T
 # for dark theme
 jt -t monokai -fs 100 -tfs 12 -nfs 115 -cellw 95% -T
 ```
+
+## justfile for python
+```sh
+ln -s ~/dotfiles/python/justfile ~/dev/justfile
+```
