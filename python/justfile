@@ -3,16 +3,18 @@ default:
 
 install-dev-deps:
     #!/usr/bin/env bash
-    pip install -r $HOME/dotfiles/python/dev-requirements.pip
+    cd {{invocation_directory()}}
+    cp $HOME/dotfiles/python/dev-requirements.pip .
+    cp $HOME/dotfiles/python/pyproject.toml .
+    cp $HOME/dotfiles/python/scripts .
+    pip install -r dev-requirements.pip
 
 format:
     #!/usr/bin/env bash
     cd {{invocation_directory()}}
-    isort $(git ls-files -s '*.py')
-    python -m reindent -r -n $(git ls-files '*.py')
-    black .
+    ./scripts/format.sh
 
 lint:
     #!/usr/bin/env bash
     cd {{invocation_directory()}}
-    flake8 $(git ls-files '*.py')
+    ./scripts/lint.sh

@@ -20,3 +20,10 @@ use_parentheses = true
 [tool.pytest.ini_options]
 addopts = "--cov --cov-report=html --cov-report=term"
 testpaths = "tests"
+
+[tool.flake8]
+select = ["A", "ANN", "BLK", "FS", "I", "C90", "E", "F", "W"]
+ignore = ["ANN002", "ANN003", "ANN101", "ANN102", "ANN401", "W503"]
+max-complexity = 11
+max-line-length = 120
+docstring-convention = "google"
