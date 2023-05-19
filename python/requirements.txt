@@ -7,4 +7,7 @@ flake8-isort
 Flake8-pyproject
 flake8-use-fstring
 isort
+pip-licenses
+pytest
+pytest-cov
 reindent

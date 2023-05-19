@@ -1,20 +1,9 @@
 default:
     just --list
 
-install-dev-deps:
+init:
     #!/usr/bin/env bash
     cd {{invocation_directory()}}
-    cp $HOME/dotfiles/python/dev-requirements.pip .
-    cp $HOME/dotfiles/python/pyproject.toml .
-    cp $HOME/dotfiles/python/scripts .
-    pip install -r dev-requirements.pip
-
-format:
-    #!/usr/bin/env bash
-    cd {{invocation_directory()}}
-    ./scripts/format.sh
-
-lint:
-    #!/usr/bin/env bash
-    cd {{invocation_directory()}}
-    ./scripts/lint.sh
+    cp -n $HOME/dotfiles/python/requirements.txt .
+    cp -n $HOME/dotfiles/python/pyproject.toml .
+    cp -n $HOME/dotfiles/python/Makefile .
