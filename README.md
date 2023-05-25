@@ -52,6 +52,7 @@ Run the following command to install oh-my-zsh and setup the default `.zshrc`:
 ```sh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 cp ~/dotfiles/.zshrc_default ~/.zshrc
+cp -r ~/dotfiles/conda-zsh-completion ~/.oh-my-zsh/custom/plugins/conda-zsh-completion
 ```
 
 
