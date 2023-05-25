@@ -56,6 +56,13 @@ cp -r ~/dotfiles/conda-zsh-completion ~/.oh-my-zsh/custom/plugins/conda-zsh-comp
 ```
 
 
+## Bash scripts
+```sh
+mkdir -p ~/bin
+ln -s ~/dotfiles/bin/* ~/bin/
+```
+
+
 ## Jupyter
 Using `jupyterthemes` like on https://medium.com/@rbmsingh/making-jupyter-dark-mode-great-5adaedd814db. Run
 ```sh
