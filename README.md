@@ -15,6 +15,13 @@ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
 Go into a vim session and type `:PluginInstall`
 
+### YouCompleteMe
+Requirements (Use conda if you don't have them):
+```sh
+conda create -n ycm-compile -c conda-forge cmake mono go openjdk nodejs -y
+conda activate ycm-compile
+```
+
 
 ## Tmux
 Install tpm
