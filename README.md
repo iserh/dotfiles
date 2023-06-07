@@ -22,6 +22,12 @@ conda create -n ycm-compile -c conda-forge cmake mono go openjdk nodejs -y
 conda activate ycm-compile
 ```
 
+Afterwards run:
+```sh
+cd ~/.vim/bundle/YouCompleteMe
+./install.py --all
+```
+
 
 ## Tmux
 Install tpm
