@@ -4,6 +4,5 @@ default:
 init:
     #!/usr/bin/env bash
     cd {{invocation_directory()}}
-    cp -n $HOME/dotfiles/python/requirements.txt .
     cp -n $HOME/dotfiles/python/pyproject.toml .
     cp -n $HOME/dotfiles/python/Makefile .
