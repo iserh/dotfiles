@@ -17,8 +17,7 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'davidhalter/jedi-vim'
-Plugin 'ervandew/supertab'
+Plugin 'ycm-core/YouCompleteMe'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'arithran/vim-delete-hidden-buffers'
@@ -42,12 +41,17 @@ nnoremap <F5> :DeleteHiddenBuffers<CR>
 " vim-autoread
 set autoread
 
-" supertab
-let g:SuperTabDefaultCompletionType = "context"
-
-" jedi-vim
-let g:jedi#popup_on_dot = 0
-let g:jedi#show_call_signatures = 0
+" youcompleteme
+let g:ycm_autoclose_preview_window_after_completion=1
+nmap <silent> <leader>D <plug>(YCMHover)
+imap <silent> <leader>D <Plug>(YCMToggleSignatureHelp)
+nmap <leader>d  :YcmCompleter GoTo<CR>
+nmap <leader>n  :YcmCompleter GoToReferences<CR>
+nmap K :YcmCompleter GetDoc<CR>
+nmap <leader>s  :YcmCompleter GetType<CR>
+nmap <leader>r :exe 'YcmCompleter RefactorRename '.input('refactor \"'.expand('<cword>').'\" to:')<cr>
+nmap <leader>fw <Plug>(YCMFindSymbolInWorkspace)
+nmap <leader>fd <Plug>(YCMFindSymbolInDocument)
 
 " vim-fugitive
 nnoremap <leader>gd :Gvdiffsplit!<CR>
@@ -64,6 +68,9 @@ let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
 " ----------------------------------------
 " Non-Plugin Settings
 " ----------------------------------------
+
+" enable system clipboard
+set clipboard=unnamedplus
 
 colorscheme monokai_pro
 
@@ -94,6 +101,9 @@ set backspace=indent,eol,start
 " hidden buffers helpful enough to disable this protection. See `:help hidden`
 " for more information on this.
 set hidden
+
+set splitright
+set splitbelow
 
 " This setting makes search case-insensitive when all characters in the string
 " being searched are lowercase. However, the search becomes case-sensitive if
@@ -135,7 +145,7 @@ set ttymouse=sgr
 " inoremap <Down>  <ESC>:echoe "Use j"<CR>
 
 " pwd follows file that is edited
-set autochdir
+" set autochdir
 
 " hightlight search items
 set hlsearch
