@@ -50,7 +50,7 @@ rm -rf monokai-gnome-terminal
 ## Apple terminal
 Make sure your on `osx` branch of this repo. After installing vim plugins run the following command to match the terminal background:
 ```sh
-~/dotfiles/monokai_background.sh
+cp ~/dotfiles/monokai_pro.vim ~/.vim/bundle/vim-monokai-pro/colors
 ```
 
 
@@ -69,17 +69,6 @@ mkdir -p ~/bin
 ln -s ~/dotfiles/bin/* ~/bin/
 ```
 
-
-## Jupyter
-Using `jupyterthemes` like on https://medium.com/@rbmsingh/making-jupyter-dark-mode-great-5adaedd814db. Run
-```sh
-pip install jupyterthemes
-jt -t grade3 -fs 100 -tfs 12 -nfs 115 -cellw 95% -T
-```
-```sh
-# for dark theme
-jt -t monokai -fs 100 -tfs 12 -nfs 115 -cellw 95% -T
-```
 
 ## justfile for python
 ```sh
