@@ -28,6 +28,13 @@ cd ~/.vim/bundle/YouCompleteMe
 ./install.py --all
 ```
 
+### If powerline symbols are weird
+```
+git clone https://github.com/powerline/fonts.git --depth=1
+fonts/install.sh
+rm -rf fonts
+```
+
 
 ## Tmux
 Install tpm
