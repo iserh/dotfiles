@@ -102,6 +102,9 @@ let g:airline_powerline_fonts = 1
 " Non-Plugin Settings
 " ----------------------------------------
 
+" Working dir
+set autochdir
+
 " enable system clipboard
 set clipboard=unnamedplus
 
