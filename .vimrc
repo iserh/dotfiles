@@ -25,7 +25,6 @@ Plugin 'djoshea/vim-autoread'
 Plugin 'tpope/vim-fugitive'
 Plugin 'kien/ctrlp.vim'
 Plugin 'phanviet/vim-monokai-pro'
-Plugin 'vim-syntastic/syntastic'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'sheerun/vim-polyglot' " python syntax highlighting
@@ -63,14 +62,6 @@ nnoremap gdh :diffget //2<CR>
 nnoremap gdah :%diffget //2<CR>
 nnoremap gdl :diffget //3<CR>
 nnoremap gdal :%diffget //3<CR>
-
-" syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-let g:syntastic_check_on_open = 1
-let g:syntastic_python_checkers = ['flake8']
-let g:syntastic_check_on_wq = 0
 
 " ctrlp
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
