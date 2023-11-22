@@ -17,7 +17,7 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'ycm-core/YouCompleteMe'
+" Plugin 'ycm-core/YouCompleteMe'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'arithran/vim-delete-hidden-buffers'
@@ -44,17 +44,17 @@ nnoremap <F5> :DeleteHiddenBuffers<CR>
 set autoread
 
 " youcompleteme
-let g:ycm_autoclose_preview_window_after_completion=1
-let g:ycm_auto_hover=''
-nmap <silent> <leader>D <plug>(YCMHover)
-imap <silent> <leader>D <Plug>(YCMToggleSignatureHelp)
-nmap <leader>d  :YcmCompleter GoTo<CR>
-nmap <leader>n  :YcmCompleter GoToReferences<CR>
-nmap K :YcmCompleter GetDoc<CR>
-nmap <leader>s  :YcmCompleter GetType<CR>
-nmap <leader>r :exe 'YcmCompleter RefactorRename '.input('refactor \"'.expand('<cword>').'\" to:')<cr>
-nmap <leader>fw <Plug>(YCMFindSymbolInWorkspace)
-nmap <leader>fd <Plug>(YCMFindSymbolInDocument)
+" let g:ycm_autoclose_preview_window_after_completion=1
+" let g:ycm_auto_hover=''
+" nmap <silent> <leader>D <plug>(YCMHover)
+" imap <silent> <leader>D <Plug>(YCMToggleSignatureHelp)
+" nmap <leader>d  :YcmCompleter GoTo<CR>
+" nmap <leader>n  :YcmCompleter GoToReferences<CR>
+" nmap K :YcmCompleter GetDoc<CR>
+" nmap <leader>s  :YcmCompleter GetType<CR>
+" nmap <leader>r :exe 'YcmCompleter RefactorRename '.input('refactor \"'.expand('<cword>').'\" to:')<cr>
+" nmap <leader>fw <Plug>(YCMFindSymbolInWorkspace)
+" nmap <leader>fd <Plug>(YCMFindSymbolInDocument)
 
 " vim-fugitive
 nnoremap <leader>gd :Gvdiffsplit!<CR>
