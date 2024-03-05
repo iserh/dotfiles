@@ -18,6 +18,8 @@ call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'davidhalter/jedi-vim'
+Plugin 'ervandew/supertab'
+Plugin 'preservim/nerdtree'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'arithran/vim-delete-hidden-buffers'
@@ -35,6 +37,14 @@ filetype plugin indent on    " required
 " Plugin Settings
 " ----------------------------------------
 
+" jedi-vim
+let g:jedi#popup_on_dot = 0
+let g:jedi#popup_select_first = 0
+let g:jedi#show_call_signatures = "0"
+
+" supertab
+let g:SuperTabDefaultCompletionType = "<c-n>"
+
 " vim-delete-hidden-buffers
 nnoremap <F5> :DeleteHiddenBuffers<CR>
 
@@ -49,16 +59,29 @@ nnoremap gdl :diffget //3<CR>
 nnoremap gdal :%diffget //3<CR>
 
 " ctrlp
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip
-let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,.DS_Store,*.pyc,*.egg-info,__pycache__
+let g:ctrlp_custom_ignore = 'node_modules\|git'
 
 " NERDTree
-nnoremap <C-B> :Lexplore<CR>
-let g:netrw_banner = 0
-let g:netrw_liststyle = 3
-let g:netrw_browse_split = 4
-let g:netrw_altv = 1
-let g:netrw_winsize = 25
+let NERDTreeRespectWildIgnore=1
+" nnoremap <leader>n :NERDTreeFocus<CR>
+nnoremap <C-n> :NERDTree<CR>
+nnoremap <C-b> :NERDTreeToggle<CR>
+" nnoremap <C-S-f> :NERDTreeFind<CR>
+" Start NERDTree when Vim is started without file arguments.
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
+" Start NERDTree when Vim starts with a directory argument.
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists('s:std_in') |
+    \ execute 'NERDTree' argv()[0] | wincmd p | enew | execute 'cd '.argv()[0] | endif
+" Exit Vim if NERDTree is the only window remaining in the only tab.
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+" Close the tab if NERDTree is the only window remaining in it.
+autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+" If another buffer tries to replace NERDTree, put it in the other window, and bring back NERDTree.
+autocmd BufEnter * if winnr() == winnr('h') && bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
+    \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
 
 " air-line
 let g:airline_powerline_fonts = 1
