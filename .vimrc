@@ -39,8 +39,8 @@ filetype plugin indent on    " required
 
 " jedi-vim
 let g:jedi#popup_on_dot = 0
-let g:jedi#popup_select_first = 0
 let g:jedi#show_call_signatures = "0"
+let g:jedi#popup_select_first = 1
 
 " supertab
 let g:SuperTabDefaultCompletionType = "<c-n>"
@@ -107,6 +107,7 @@ set shortmess+=I
 
 " Show line numbers.
 " set number
+set statusline+=line:\ %l\ col:\ %c,
 
 " Highlight current line
 set cursorline
@@ -193,6 +194,8 @@ tnoremap <Esc> <C-\><C-n>
 " Full file path
 set statusline+=%F
 
+" format json files
+nnoremap <Leader>F :%!python -m json.tool<cr>
 
 
 " ----------------------------------------
