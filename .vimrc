@@ -95,7 +95,7 @@ let g:airline_powerline_fonts = 1
 set autochdir
 
 " enable system clipboard
-set clipboard=unnamedplus
+" set clipboard=unnamedplus
 
 colorscheme monokai_pro
 
