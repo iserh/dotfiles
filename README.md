@@ -82,8 +82,19 @@ mkdir -p ~/bin
 ln -s ~/dotfiles/bin/* ~/bin/
 ```
 
-
 ## justfile for python
 ```sh
 ln -s ~/dotfiles/python/justfile ~/dev/justfile
+```
+
+## If no zsh available
+- Install zsh from conda-forge
+- Add to your `.profile`:
+```sh
+if [ -t 0 ] ; then
+    # run zsh as default shell
+    # export SHELL=`which zsh`
+    export SHELL=<path-to-shell>
+    [ -z "$ZSH_VERSION" ] && exec "$SHELL" -l
+fi
 ```
