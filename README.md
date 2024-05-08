@@ -1,4 +1,15 @@
 # dotfiles
+Development environment configuration via dotfiles.
+
+
+# Getting started
+## Requirements
+- git
+- vim (with `+python3` support)
+- zsh
+- tmux
+
+## Installation
 1. Run these commands
 ```sh
 git clone git@github.com:iserh/dotfiles.git ~/dotfiles
@@ -7,28 +18,43 @@ ln -s ~/dotfiles/.vimrc ~/.vimrc
 ln -s ~/dotfiles/.editorconfig ~/.editorconfig
 ```
 
+### Conda
+```sh
+mkdir -p ~/miniconda3
+wget "https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh" -O ~/miniconda3/miniconda.sh
+bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
+rm ~/miniconda3/miniconda.sh
+```
+*(Optional)*: If some requirements are missing, create a conda environment for your shell:
+```sh
+conda create -n shell -y
+~/miniconda3/bin/conda init
+```
+
 ## Vim
-If not already done you also have to install Vundle
+Check if vim supports `+python3`:
+```sh
+vim --version
+```
+If not, install vim via conda:
+```sh
+conda 
+```
+
 ```sh
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 ```
 
+## Tmux
+Install tpm
+```sh
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+```
+
 Go into a vim session and type `:PluginInstall`
 
-### YouCompleteMe
-Requirements (Use conda if you don't have them):
-```sh
-conda create -n ycm-compile -c conda-forge cmake mono go openjdk nodejs -y
-conda activate ycm-compile
-```
-
-Afterwards run:
-```sh
-cd ~/.vim/bundle/YouCompleteMe
-./install.py --all
-```
-
-### If powerline symbols are weird
+# Troubleshooting
+## If powerline symbols are weird
 ```
 git clone https://github.com/powerline/fonts.git --depth=1
 fonts/install.sh
@@ -36,11 +62,7 @@ rm -rf fonts
 ```
 
 
-## Tmux
-Install tpm
-```sh
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-```
+
 
 Then go into a tmux session and type `C-a I`
 
@@ -97,4 +119,8 @@ if [ -t 0 ] ; then
     export SHELL=<path-to-shell>
     [ -z "$ZSH_VERSION" ] && exec "$SHELL" -l
 fi
+```
+Add this to you .zshrc
+```sh
+export PATH="$HOME/miniconda3/envs/shell/bin:$PATH"
 ```
