@@ -177,8 +177,8 @@ set ttymouse=sgr
 set hlsearch
 nnoremap <Leader><space> :noh<cr>
 
-" Disable word wrap, press f2 to toggle
-set nowrap
+" Enable word wrap, press f2 to toggle
+set wrap
 nnoremap <silent><expr> <f2> ':set wrap! go'.'-+'[&wrap]."=b\r"
 
 " reindent blocks
