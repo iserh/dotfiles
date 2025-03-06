@@ -1,13 +1,14 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
-set termguicolors
+" set termguicolors
 
-if exists('+termguicolors') && ($TERM == "st-256color" || $TERM == "tmux-256color")
-    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-endif
+" if exists('+termguicolors') && ($TERM == "st-256color" || $TERM == "tmux-256color")
+"     let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+"     let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+" endif
 
+" colorscheme monokai_pro
 
 " ----------------------------------------
 " Plugins
@@ -26,7 +27,7 @@ Plugin 'arithran/vim-delete-hidden-buffers'
 Plugin 'djoshea/vim-autoread'
 Plugin 'tpope/vim-fugitive'
 Plugin 'kien/ctrlp.vim'
-Plugin 'phanviet/vim-monokai-pro'
+" Plugin 'phanviet/vim-monokai-pro'
 Plugin 'sheerun/vim-polyglot' " python syntax highlighting
 
 call vundle#end()            " required
@@ -96,8 +97,6 @@ set autochdir
 
 " enable system clipboard
 " set clipboard=unnamedplus
-
-colorscheme monokai_pro
 
 " Turn on syntax highlighting.
 syntax on
