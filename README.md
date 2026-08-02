@@ -1,78 +1,134 @@
 # dotfiles
-Development environment configuration via dotfiles.
 
-# Getting started
-## Requirements
-- git
-- zsh
-- tmux
-- vim (with `+python3` support)
+Development environment for macOS and Linux, managed with [chezmoi](https://chezmoi.io).
 
-## Installation
-### LazyVim
-<script src="https://gist.github.com/Q-M-D/51ae5927982fc4aa63a80809b1623bc1.js"></script>
+Shell is zsh + oh-my-zsh, editor is Neovim running [LazyVim](https://lazyvim.github.io),
+multiplexer is tmux + [tpm](https://github.com/tmux-plugins/tpm), packages come from Homebrew.
 
-1. Run these commands
+## Install on a new machine
+
+Install [Homebrew](https://brew.sh) first — everything else follows from it. Then:
+
 ```sh
-git clone git@github.com:iserh/dotfiles.git ~/dotfiles
-ln -s ~/dotfiles/.tmux.conf ~/.tmux.conf
-ln -s ~/dotfiles/.vimrc ~/.vimrc
-ln -s ~/dotfiles/.editorconfig ~/.editorconfig
+sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply --source="$HOME/dotfiles" git@github.com:iserh/dotfiles.git
 ```
+
+That clones this repo to `~/dotfiles`, writes the config that points chezmoi back at it,
+applies every managed file, and runs the bootstrap scripts in `.chezmoiscripts/`:
+
+| Script | Does |
+|---|---|
+| `run_once_before_20-oh-my-zsh` | Installs oh-my-zsh (`--keep-zshrc`, so it cannot overwrite the managed `.zshrc`) |
+| `run_onchange_after_30-brew-bundle` | `brew bundle --global` against `~/.Brewfile` |
+| `run_once_after_40-tpm` | Clones tpm and installs the tmux plugins |
+| `run_onchange_after_50-nvim-plugins` | `Lazy! restore` to the pinned lockfile, then installs the Mason tools |
+| `run_once_after_60-zshrc-local` | Scaffolds an empty `~/.zshrc.local` |
+
+Then finish by hand:
+
+- Fill in `~/.zshrc.local` — see [Machine-local setup](#machine-local-setup).
+- `chsh -s $(which zsh)` if zsh is not already the login shell.
+
+## Day to day
+
+chezmoi copies files rather than symlinking them, so edits in `$HOME` have to be pushed back
+into the repo explicitly.
+
 ```sh
-git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+chezmoi diff            # what would change in $HOME
+chezmoi status          # short form
+chezmoi update -v       # git pull, then apply
+chezmoi re-add          # pull local edits back into the repo
+chezmoi cd              # drop into ~/dotfiles to commit and push
 ```
-Go into a vim session and type `:PluginInstall`
 
-## Tmux
-Install tpm
+The usual loop after changing something locally:
+
 ```sh
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-```
-Then go into a tmux session and type `C-b I`
-
-
-# Troubleshooting
-## If powerline symbols are weird
-```
-git clone https://github.com/powerline/fonts.git --depth=1
-fonts/install.sh
-rm -rf fonts
+chezmoi re-add && chezmoi cd && git add -A && git commit -m "..." && git push
 ```
 
+Neovim rewrites `lazy-lock.json` on every plugin update and `lazyvim.json` on every
+`:LazyExtras` toggle, so `chezmoi re-add ~/.config/nvim` is the one to remember.
 
-## Oh-my-zsh
-Run the following command to install oh-my-zsh and setup the default `.zshrc`:
+Alternatively edit through chezmoi and skip the re-add: `chezmoi edit --apply ~/.zshrc`.
+
+## What's managed
+
+```
+dot_zshrc                     → ~/.zshrc
+dot_tmux.conf                 → ~/.tmux.conf
+dot_editorconfig              → ~/.editorconfig
+dot_Brewfile                  → ~/.Brewfile
+dot_config/nvim/              → ~/.config/nvim/    (LazyVim)
+private_dot_claude/skills/    → ~/.claude/skills/  (Claude Code skills)
+.chezmoiscripts/              bootstrap, not applied to $HOME
+```
+
+Source names are positional: `dot_` becomes a leading dot, `private_` means mode 0700.
+chezmoi ignores any source file that starts with a literal `.`, which is why
+`~/.config/nvim/.neoconf.json` is stored as `dot_config/nvim/dot_neoconf.json`. `README.md`
+would otherwise land in `$HOME`, so it is listed in `.chezmoiignore`.
+
+Add something new with `chezmoi add ~/.config/foo`, then commit.
+
+## Machine-local setup
+
+`~/.zshrc` is deliberately thin: oh-my-zsh and nothing else. Everything that varies per
+machine — `PATH`, toolchains, tokens, host-specific functions and aliases — lives in
+`~/.zshrc.local`, which is untracked, mode 0600, and sourced at the end:
+
 ```sh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-cp ~/dotfiles/.zshrc_default ~/.zshrc
-cp -r ~/dotfiles/conda-zsh-completion ~/.oh-my-zsh/custom/plugins/conda-zsh-completion
+[ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
 ```
 
+No secret ever reaches the repo. Before pushing, a cheap sanity check:
 
-## Bash scripts
 ```sh
-mkdir -p ~/bin
-ln -s ~/dotfiles/bin/* ~/bin/
-```
-
-## justfile for python
-```sh
-ln -s ~/dotfiles/python/justfile ~/dev/justfile
+chezmoi cd && git diff --cached | grep -iE 'token|secret|password|glpat-|api[_-]key'
 ```
 
-## If no zsh available
-- Install zsh from conda-forge
-- Add to your `.profile`:
+## Packages
+
+`dot_Brewfile` is the package list. Install, then snapshot:
+
 ```sh
-if [ -t 0 ] ; then
-    # run zsh as default shell
-    # export SHELL=`which zsh`
-    export SHELL=<path-to-shell>
-    [ -z "$ZSH_VERSION" ] && exec "$SHELL" -l
-fi
+brew install <pkg>
+brew bundle dump --force --file="$HOME/dotfiles/dot_Brewfile"
+chezmoi apply
 ```
-Add this to you .zshrc
+
+`brew bundle dump` writes every on-request formula, so prune the result to what actually
+belongs in a fresh machine. `chezmoi apply` then refreshes `~/.Brewfile` and, because the file
+changed, re-runs the `brew bundle` script.
+
+## Neovim
+
+Stock LazyVim plus these extras (`lazyvim.json`): docker, json, markdown, python, toml,
+typescript. Plugin versions are pinned in `lazy-lock.json`, which `Lazy! restore` reproduces
+exactly on a new machine.
+
+`mason-sync.lua` installs the LSP servers, formatters and linters those extras imply. It exists
+because Mason normally resolves its `ensure_installed` list off nvim-lspconfig, which loads on
+`BufReadPre` and therefore never fires in the headless session a bootstrap script gets; the
+script derives the same list directly and exits when the last download closes. Run it by hand
+any time with:
+
 ```sh
-export PATH="$HOME/miniconda3/envs/shell/bin:$PATH"
+nvim --headless -c "luafile ~/.config/nvim/mason-sync.lua"
 ```
+
+Mason spawns `npm` as a child process, so npm has to be a real binary on `PATH`. If node comes
+from nvm and `~/.zshrc.local` only defines lazy-loading shell functions, every npm-based server
+(`pyright`, `vtsls`, `json-lsp`, the docker servers) fails with `npm is not executable`. Put
+nvm's default `bin` directory on `PATH` directly.
+
+LazyVim binds `gd`, `gr`, `gI`, `gy` and `K` per-buffer on LSP attach, so if they appear dead in
+a file, no server attached: check `:LspInfo`, add the language extra with `:LazyExtras`, then
+`chezmoi re-add ~/.config/nvim`.
+
+## Agent setup
+
+`~/.claude/skills/setup-workstation/SKILL.md` documents all of the above for Claude Code. With
+it in place, "set up this machine from my dotfiles" or "add this file to my dotfiles" is enough
+instruction.

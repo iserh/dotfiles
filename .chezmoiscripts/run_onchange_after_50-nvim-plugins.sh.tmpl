@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Re-runs whenever the plugin lockfile or the enabled LazyVim extras change.
+# lazy-lock hash: {{ include "dot_config/nvim/lazy-lock.json" | sha256sum }}
+# lazyvim hash:   {{ include "dot_config/nvim/lazyvim.json" | sha256sum }}
+
+for _brew in /opt/homebrew/bin/brew /usr/local/bin/brew /home/linuxbrew/.linuxbrew/bin/brew; do
+    [ -x "$_brew" ] && eval "$("$_brew" shellenv)" && break
+done
+
+# Roughly half of Mason's registry installs through npm, spawned as a child process
+# rather than through a shell, so npm has to be a real binary on PATH — the nvm
+# shell functions are invisible to it.
+if [ -r "$HOME/.nvm/alias/default" ]; then
+    for _bin in "$HOME/.nvm/versions/node/v$(cat "$HOME/.nvm/alias/default")"*/bin; do
+        [ -d "$_bin" ] && export PATH="$_bin:$PATH"
+    done
+fi
+
+if ! command -v nvim &>/dev/null; then
+    echo "==> nvim not on PATH, skipping plugin sync"
+    exit 0
+fi
+
+command -v npm &>/dev/null || echo "==> npm not on PATH; Mason's npm-based servers will fail"
+
+echo "==> Syncing Neovim plugins to lazy-lock.json"
+nvim --headless "+Lazy! restore" +qa
+
+# Mason normally resolves ensure_installed off nvim-lspconfig, which loads on
+# BufReadPre and so never fires in a headless session. mason-sync.lua derives the
+# same package list directly and quits when the last install closes.
+echo "==> Installing Mason tools"
+nvim --headless -c "luafile $HOME/.config/nvim/mason-sync.lua"

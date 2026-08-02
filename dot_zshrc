@@ -1,0 +1,15 @@
+export ZSH="$HOME/.oh-my-zsh"
+
+ZSH_THEME="robbyrussell"
+plugins=(git tmux)
+
+# Docker CLI completions. This must come before oh-my-zsh is sourced: oh-my-zsh
+# runs compinit itself, and anything added to fpath afterwards needs a second
+# compinit to be picked up.
+fpath=($HOME/.docker/completions $fpath)
+
+source $ZSH/oh-my-zsh.sh
+
+# Machine-local setup: PATH, toolchains, secrets, per-host functions and aliases.
+# Never tracked in the dotfiles repo.
+[ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"

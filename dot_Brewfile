@@ -1,0 +1,10 @@
+# Manage your dotfiles across multiple diverse machines, securely
+brew "chezmoi"
+# Play, record, convert, and stream select audio and video codecs
+brew "fzf"
+# Ambitious Vim-fork focused on extensibility and agility
+brew "neovim"
+# Terminal multiplexer
+brew "tmux"
+# Terminal emulator that uses platform-native UI and GPU acceleration
+cask "ghostty"
