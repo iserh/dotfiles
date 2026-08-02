@@ -96,13 +96,23 @@ literal dot** — a file must be named `dot_foo`, not `.foo`, or it will never b
 
 Repo files that are not home-directory files (`README.md`) are listed in `.chezmoiignore`.
 
-## Machine-local setup
+## Shell layout
 
-`~/.zshrc` is deliberately thin — oh-my-zsh and nothing else. Everything that varies per
-machine lives in `~/.zshrc.local`: `PATH`, brew shellenv, nvm, tokens, host-specific functions
-and aliases. It is untracked, mode 0600, and sourced at the end of `~/.zshrc`.
+zsh reads different startup files depending on how it was started, and only `.zshenv` is read
+by all of them:
 
-New `export`s go there, never in `dot_zshrc`. Before committing, confirm the diff is clean:
+| File | Read by | Holds |
+|---|---|---|
+| `.zshenv` | every zsh | `PATH`: brew, `~/.local/bin`, nvm's default `bin` |
+| `.zshrc` | interactive only | oh-my-zsh |
+| `.zshrc.local` | interactive only, untracked, 0600 | tokens, functions, aliases |
+
+Anything a non-interactive shell needs belongs in `dot_zshenv` — a git hook, cron job or script
+never sources `.zshrc`, so config placed there works in a terminal and nowhere else. Keep
+`.zshenv` cheap: it runs for every shell.
+
+New secrets go in `~/.zshrc.local`, never in a tracked file. Before committing, confirm the
+diff is clean:
 
 ```sh
 chezmoi cd && git diff --cached | grep -iE 'token|secret|password|glpat-|api[_-]key'

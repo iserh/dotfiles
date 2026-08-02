@@ -56,6 +56,7 @@ Alternatively edit through chezmoi and skip the re-add: `chezmoi edit --apply ~/
 ## What's managed
 
 ```
+dot_zshenv                    → ~/.zshenv
 dot_zshrc                     → ~/.zshrc
 dot_tmux.conf                 → ~/.tmux.conf
 dot_editorconfig              → ~/.editorconfig
@@ -72,15 +73,24 @@ would otherwise land in `$HOME`, so it is listed in `.chezmoiignore`.
 
 Add something new with `chezmoi add ~/.config/foo`, then commit.
 
-## Machine-local setup
+## Shell layout
 
-`~/.zshrc` is deliberately thin: oh-my-zsh and nothing else. Everything that varies per
-machine — `PATH`, toolchains, tokens, host-specific functions and aliases — lives in
-`~/.zshrc.local`, which is untracked, mode 0600, and sourced at the end:
+zsh reads different files depending on how it was started, and only `.zshenv` is read by all
+of them. Splitting along that line is what makes `git commit` hooks, cron and scripts see the
+same toolchain an interactive shell does.
 
-```sh
-[ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
-```
+| File | Read by | Holds |
+|---|---|---|
+| `.zshenv` | every zsh | `PATH`: brew, `~/.local/bin`, nvm's default `bin` |
+| `.zshrc` | interactive only | oh-my-zsh |
+| `.zshrc.local` | interactive only, untracked | tokens, functions, aliases |
+
+`~/.zshrc` ends with `[ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"`.
+
+Anything a non-interactive shell needs — a binary on `PATH`, an env var a hook reads — has to
+go in `.zshenv`; putting it in `.zshrc` will appear to work in a terminal and fail everywhere
+else. `.zshenv` runs on every shell, so keep it cheap: the `brew shellenv` call is guarded on
+`$HOMEBREW_PREFIX` so nested shells skip the fork, and `typeset -U path` stops `PATH` growing.
 
 No secret ever reaches the repo. Before pushing, a cheap sanity check:
 
