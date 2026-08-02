@@ -1,7 +1,6 @@
 # dotfiles
 Development environment configuration via dotfiles.
 
-
 # Getting started
 ## Requirements
 - git
@@ -10,6 +9,9 @@ Development environment configuration via dotfiles.
 - vim (with `+python3` support)
 
 ## Installation
+### LazyVim
+<script src="https://gist.github.com/Q-M-D/51ae5927982fc4aa63a80809b1623bc1.js"></script>
+
 1. Run these commands
 ```sh
 git clone git@github.com:iserh/dotfiles.git ~/dotfiles
