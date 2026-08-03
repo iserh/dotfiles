@@ -40,8 +40,9 @@ scripts in `.chezmoiscripts/` in order:
 
 Then finish by hand:
 
-- Fill in `~/.zshrc.local` — `PATH`, toolchains, `GITLAB_TOKEN`, `JIRA_API_TOKEN`. See
-  [Machine-local setup](#machine-local-setup).
+- Fill in `~/.zshrc.local` — `GITLAB_TOKEN`, `JIRA_API_TOKEN`. See
+  [Shell layout](#shell-layout).
+- Install a Nerd Font and set it in the terminal. See [Fonts](#fonts).
 - `chsh -s $(which zsh)` if zsh is not already the login shell.
 
 Node, nvm, and anything else beyond the Brewfile are deliberately not automated. Install them
@@ -130,6 +131,30 @@ chezmoi apply          # refreshes ~/.Brewfile and re-runs 30-brew-bundle
 
 `brew bundle dump` emits every on-request formula, so prune it back to what a fresh machine
 actually needs before committing.
+
+## Fonts
+
+LazyVim uses Nerd Font glyphs unconditionally; without one its UI renders tofu boxes. This
+setup uses **JetBrainsMono Nerd Font**:
+
+```sh
+brew install --cask font-jetbrains-mono-nerd-font
+```
+
+Or download from <https://www.nerdfonts.com/font-downloads>, pick *JetBrainsMono*, and install
+the `.ttf` files to `~/Library/Fonts` (macOS) or `~/.local/share/fonts` + `fc-cache -f` (Linux).
+
+Installing it is only half the job — Neovim is a terminal application and never picks a font, so
+the terminal must be pointed at it. Ghostty takes a config file, iTerm2 needs the GUI
+(Settings → Profiles → Text → Font):
+
+```sh
+# ~/.config/ghostty/config
+font-family = "JetBrainsMono Nerd Font Mono"
+```
+
+Confirm with `ghostty +list-fonts | grep -i nerd` that the family is visible, and open `:Lazy`
+to check icons render rather than boxes.
 
 ## Neovim tooling
 
