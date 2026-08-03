@@ -6,5 +6,7 @@ brew "fzf"
 brew "neovim"
 # Terminal multiplexer
 brew "tmux"
+# Parser generator tool — nvim-treesitter's main branch compiles parsers with it
+brew "tree-sitter-cli"
 # Terminal emulator that uses platform-native UI and GPU acceleration
 cask "ghostty"

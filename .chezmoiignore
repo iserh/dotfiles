@@ -1,1 +1,6 @@
 README.md
+
+# Plugins float, so the repo pins no versions. lazy.nvim still rewrites this file
+# locally on every update; it just stays untracked. Listed here so that a broad
+# `chezmoi add ~/.config/nvim` cannot quietly reintroduce the pin.
+.config/nvim/lazy-lock.json

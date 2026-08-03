@@ -21,7 +21,7 @@ applies every managed file, and runs the bootstrap scripts in `.chezmoiscripts/`
 | `run_once_before_20-oh-my-zsh` | Installs oh-my-zsh (`--keep-zshrc`, so it cannot overwrite the managed `.zshrc`) |
 | `run_onchange_after_30-brew-bundle` | `brew bundle --global` against `~/.Brewfile` |
 | `run_once_after_40-tpm` | Clones tpm and installs the tmux plugins |
-| `run_onchange_after_50-nvim-plugins` | `Lazy! restore` to the pinned lockfile, then installs the Mason tools |
+| `run_onchange_after_50-nvim-plugins` | `Lazy! sync` to the latest plugin versions, compiles the Treesitter parsers, then installs the Mason tools |
 | `run_once_after_60-zshrc-local` | Scaffolds an empty `~/.zshrc.local` |
 
 Then finish by hand:
@@ -49,8 +49,9 @@ The usual loop after changing something locally:
 chezmoi re-add && chezmoi cd && git add -A && git commit -m "..." && git push
 ```
 
-Neovim rewrites `lazy-lock.json` on every plugin update and `lazyvim.json` on every
-`:LazyExtras` toggle, so `chezmoi re-add ~/.config/nvim` is the one to remember.
+Neovim rewrites `lazyvim.json` on every `:LazyExtras` toggle, so
+`chezmoi re-add ~/.config/nvim` is the one to remember. `lazy-lock.json` is deliberately
+untracked — see [Neovim](#neovim).
 
 Alternatively edit through chezmoi and skip the re-add: `chezmoi edit --apply ~/.zshrc`.
 
@@ -70,8 +71,9 @@ private_dot_claude/skills/    → ~/.claude/skills/  (Claude Code skills)
 
 Source names are positional: `dot_` becomes a leading dot, `private_` means mode 0700.
 chezmoi ignores any source file that starts with a literal `.`, which is why
-`~/.config/nvim/.neoconf.json` is stored as `dot_config/nvim/dot_neoconf.json`. `README.md`
-would otherwise land in `$HOME`, so it is listed in `.chezmoiignore`.
+`~/.config/nvim/.neoconf.json` is stored as `dot_config/nvim/dot_neoconf.json`. `.chezmoiignore`
+holds the two things that must not be managed: `README.md`, which would otherwise land in
+`$HOME`, and `~/.config/nvim/lazy-lock.json`, which would reintroduce plugin pinning.
 
 Add something new with `chezmoi add ~/.config/foo`, then commit.
 
@@ -147,8 +149,27 @@ icons in the header rather than boxes.
 ## Neovim
 
 Stock LazyVim plus these extras (`lazyvim.json`): docker, json, markdown, python, toml,
-typescript. Plugin versions are pinned in `lazy-lock.json`, which `Lazy! restore` reproduces
-exactly on a new machine.
+typescript.
+
+Nothing here is version-pinned. `lazy-lock.json` is untracked and `.chezmoiignore`d, the
+bootstrap script runs `Lazy! sync`, and `brew "neovim"` floats too, so a fresh machine and
+`:Lazy update` both land on whatever is current. Update with `:Lazy update`, then `:TSUpdate`
+if a parser stops matching its queries.
+
+The tradeoff is deliberate. Pinning plugins while Homebrew keeps moving Neovim is the one
+combination nobody upstream tests, and it fails in proportion to how long the two have been
+apart: an 18-month gap once surfaced as `attempt to call method 'range' (a nil value)` from a
+Treesitter query directive, because Neovim 0.12 had changed a query API that the pinned
+nvim-treesitter still called the old way. Floating both trades reproducibility across machines
+and one-command rollback for breakage that arrives in small, attributable increments while the
+two halves stay in a combination upstream actually tests. It also means an update can break the
+editor at a moment of its choosing rather than yours, and that two machines provisioned weeks
+apart are not guaranteed to match.
+
+nvim-treesitter tracks its `main` branch, which compiles parsers on demand rather than shipping
+them, so `tree-sitter-cli` is in the Brewfile — without it every parser build fails. Parsers land
+in `~/.local/share/nvim/lazy/nvim-treesitter/parser/`, outside the repo; only the plugin pin is
+tracked. Rebuild them by hand with `:TSUpdate`.
 
 `mason-sync.lua` installs the LSP servers, formatters and linters those extras imply. It exists
 because Mason normally resolves its `ensure_installed` list off nvim-lspconfig, which loads on
@@ -159,6 +180,9 @@ any time with:
 ```sh
 nvim --headless -c "luafile ~/.config/nvim/mason-sync.lua"
 ```
+
+Both headless steps arm a timeout before anything that can throw. A headless nvim has no UI to
+return to, so an uncaught error there hangs the bootstrap run instead of failing it.
 
 Mason spawns `npm` as a child process, so npm has to be a real binary on `PATH`. If node comes
 from nvm and `~/.zshrc.local` only defines lazy-loading shell functions, every npm-based server

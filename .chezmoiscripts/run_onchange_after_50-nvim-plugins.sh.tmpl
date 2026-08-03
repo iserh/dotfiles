@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Re-runs whenever the plugin lockfile or the enabled LazyVim extras change.
-# lazy-lock hash: {{ include "dot_config/nvim/lazy-lock.json" | sha256sum }}
-# lazyvim hash:   {{ include "dot_config/nvim/lazyvim.json" | sha256sum }}
+# Re-runs on a fresh machine and whenever the enabled LazyVim extras change. There is
+# no lockfile hash to key on: plugins float, so this script converges on whatever is
+# current rather than reproducing a pin. Routine updates are `:Lazy update` in nvim.
+# lazyvim hash: {{ include "dot_config/nvim/lazyvim.json" | sha256sum }}
 
 for _brew in /opt/homebrew/bin/brew /usr/local/bin/brew /home/linuxbrew/.linuxbrew/bin/brew; do
     [ -x "$_brew" ] && eval "$("$_brew" shellenv)" && break
@@ -25,8 +26,34 @@ fi
 
 command -v npm &>/dev/null || echo "==> npm not on PATH; Mason's npm-based servers will fail"
 
-echo "==> Syncing Neovim plugins to lazy-lock.json"
-nvim --headless "+Lazy! restore" +qa
+echo "==> Installing Neovim plugins at their latest versions"
+nvim --headless "+Lazy! sync" +qa
+
+# nvim-treesitter's main branch compiles parsers on demand instead of shipping them,
+# and only does so from its config hook, which runs on LazyFile/VeryLazy and so never
+# fires in a headless session. Derive the same ensure_installed list LazyVim would use
+# and block until the compiles finish.
+command -v tree-sitter &>/dev/null || echo "==> tree-sitter not on PATH; parser compiles will fail"
+
+echo "==> Compiling Treesitter parsers"
+nvim --headless -c 'lua
+  local ok, err = pcall(function()
+    local TS = require("nvim-treesitter")
+    local want = (require("lazyvim.util").opts("nvim-treesitter") or {}).ensure_installed or {}
+    local missing = vim.tbl_filter(function(lang)
+      return not vim.tbl_contains(TS.get_installed(), lang)
+    end, want)
+    if #missing == 0 then
+      io.stderr:write("parsers up to date\n")
+      return
+    end
+    io.stderr:write("installing: " .. table.concat(missing, " ") .. "\n")
+    TS.install(missing, { summary = true }):wait(600000)
+  end)
+  if not ok then
+    io.stderr:write("parser sync failed: " .. tostring(err) .. "\n")
+  end
+  vim.cmd("qa!")'
 
 # Mason normally resolves ensure_installed off nvim-lspconfig, which loads on
 # BufReadPre and so never fires in a headless session. mason-sync.lua derives the
