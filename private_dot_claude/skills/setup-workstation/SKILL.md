@@ -145,16 +145,19 @@ Or download from <https://www.nerdfonts.com/font-downloads>, pick *JetBrainsMono
 the `.ttf` files to `~/Library/Fonts` (macOS) or `~/.local/share/fonts` + `fc-cache -f` (Linux).
 
 Installing it is only half the job — Neovim is a terminal application and never picks a font, so
-the terminal must be pointed at it. Ghostty takes a config file, iTerm2 needs the GUI
-(Settings → Profiles → Text → Font):
+the terminal must be pointed at it.
+
+Ghostty is managed: `dot_config/ghostty/config` sets `font-family`. Ghostty takes the rest of
+the line literally, so the family name is **unquoted**; quoting it makes the lookup fail. Bold
+and italic faces are derived automatically.
 
 ```sh
-# ~/.config/ghostty/config
-font-family = "JetBrainsMono Nerd Font Mono"
+ghostty +list-fonts | grep -E "^JetBrainsMono"   # exact family name to use
+ghostty +validate-config && ghostty +show-config | grep font-family
 ```
 
-Confirm with `ghostty +list-fonts | grep -i nerd` that the family is visible, and open `:Lazy`
-to check icons render rather than boxes.
+iTerm2 is not managed — set the font via Settings → Profiles → Text → Font. Then open `:Lazy`
+and check icons render rather than boxes.
 
 ## Neovim tooling
 

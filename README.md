@@ -62,6 +62,7 @@ dot_zshrc                     → ~/.zshrc
 dot_tmux.conf                 → ~/.tmux.conf
 dot_editorconfig              → ~/.editorconfig
 dot_Brewfile                  → ~/.Brewfile
+dot_config/ghostty/config     → ~/.config/ghostty/config
 dot_config/nvim/              → ~/.config/nvim/    (LazyVim)
 private_dot_claude/skills/    → ~/.claude/skills/  (Claude Code skills)
 .chezmoiscripts/              bootstrap, not applied to $HOME
@@ -129,16 +130,19 @@ the `.ttf` files into `~/Library/Fonts` (macOS) or `~/.local/share/fonts` + `fc-
 (Linux).
 
 Installing the font is only half of it: Neovim is a terminal application and never selects a
-font itself, so the terminal has to be told. Ghostty is configured by file, iTerm2 through the
-GUI:
+font itself, so the terminal has to be told.
+
+Ghostty is covered — `dot_config/ghostty/config` sets `font-family` and is applied with
+everything else. Ghostty takes the rest of the line literally, so the family name is unquoted;
+bold and italic faces are derived automatically. Check what it resolved with:
 
 ```sh
-# ~/.config/ghostty/config
-font-family = "JetBrainsMono Nerd Font Mono"
+ghostty +validate-config && ghostty +show-config | grep font-family
 ```
 
-iTerm2: Settings → Profiles → Text → Font. Verify with `:Lazy` or `:Mason` — a correct font
-shows icons in the header rather than boxes.
+iTerm2 is not managed — its settings only export as a plist, so set the font through the GUI:
+Settings → Profiles → Text → Font. Either way, verify by opening `:Lazy`; a correct font shows
+icons in the header rather than boxes.
 
 ## Neovim
 

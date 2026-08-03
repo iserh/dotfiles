@@ -1,0 +1,3 @@
+# Neovim never selects a font itself, so LazyVim's Nerd Font glyphs depend on the
+# terminal being pointed at one. Values are taken literally — do not quote.
+font-family = JetBrainsMono Nerd Font Mono
