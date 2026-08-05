@@ -4,4 +4,4 @@ font-family = JetBrainsMono Nerd Font Mono
 
 # Follow the system appearance; Ghostty reports theme changes to running
 # programs (DEC mode 2031), so Neovim ≥ 0.11 flips 'background' automatically.
-theme = dark:Catppuccin Frappe,light: Catppuccin Latte
+theme = dark:Catppuccin Mocha,light: Catppuccin Latte
