@@ -10,6 +10,11 @@ fpath=($HOME/.docker/completions $fpath)
 
 source $ZSH/oh-my-zsh.sh
 
+# Keep each shell's history to itself. Must come after oh-my-zsh is sourced:
+# lib/history.zsh sets share_history and would otherwise override this.
+unsetopt share_history
+setopt no_share_history
+
 # Machine-local setup: PATH, toolchains, secrets, per-host functions and aliases.
 # Never tracked in the dotfiles repo.
 [ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
