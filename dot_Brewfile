@@ -1,9 +1,13 @@
 # Manage your dotfiles across multiple diverse machines, securely
 brew "chezmoi"
+# Simple, fast and user-friendly alternative to find — the fzf-lua file pickers' backend
+brew "fd"
 # Play, record, convert, and stream select audio and video codecs
 brew "fzf"
 # Ambitious Vim-fork focused on extensibility and agility
 brew "neovim"
+# Search tool like grep and The Silver Searcher — the fzf-lua grep pickers' backend
+brew "ripgrep"
 # Terminal multiplexer
 brew "tmux"
 # Parser generator tool — nvim-treesitter's main branch compiles parsers with it
