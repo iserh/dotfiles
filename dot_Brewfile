@@ -12,5 +12,7 @@ brew "ripgrep"
 brew "tmux"
 # Parser generator tool — nvim-treesitter's main branch compiles parsers with it
 brew "tree-sitter-cli"
+# Code review TUI with vim keybindings
+brew "tuicr"
 # Terminal emulator that uses platform-native UI and GPU acceleration
 cask "ghostty"

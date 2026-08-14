@@ -1,0 +1,22 @@
+theme = "catppuccin-mocha"
+leader = ","
+comment_vim = false
+show_file_list = true
+transparent_background = false
+no_update_check = true
+
+# Conventional Comments (https://conventionalcomments.org) labels
+# order = Tab-cycle order, arranged by how often I use them
+comment_types = [
+  { id = "issue", definition = "Highlight a specific problem. Pair with a suggestion where possible.", color = "red" },
+  { id = "suggestion", definition = "Propose improvements to the current subject.", color = "blue" },
+  { id = "nitpick", definition = "Trivial, preference-based request. Non-blocking by nature.", color = "gray" },
+  { id = "question", definition = "Ask for clarification; may reveal missing context.", color = "magenta" },
+  { id = "thought", definition = "An idea that popped up during review. Not necessarily actionable.", color = "cyan" },
+  { id = "praise", definition = "Highlight something positive. Try to leave at least one per review.", color = "green" },
+  { id = "todo", definition = "Small, necessary change, not yet done.", color = "yellow" },
+  { id = "chore", definition = "Simple task required before this can be accepted (e.g. rename, update changelog).", color = "#d19a66" },
+]
+
+[forge]
+comment_type_prefix = false

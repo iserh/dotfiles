@@ -64,6 +64,7 @@ dot_tmux.conf                 → ~/.tmux.conf
 dot_editorconfig              → ~/.editorconfig
 dot_Brewfile                  → ~/.Brewfile
 dot_config/ghostty/config     → ~/.config/ghostty/config
+dot_config/tuicr/config.toml  → ~/.config/tuicr/config.toml
 dot_config/nvim/              → ~/.config/nvim/    (LazyVim)
 private_dot_claude/skills/    → ~/.claude/skills/  (Claude Code skills)
 .chezmoiscripts/              bootstrap, not applied to $HOME
@@ -192,6 +193,32 @@ nvm's default `bin` directory on `PATH` directly.
 LazyVim binds `gd`, `gr`, `gI`, `gy` and `K` per-buffer on LSP attach, so if they appear dead in
 a file, no server attached: check `:LspInfo`, add the language extra with `:LazyExtras`, then
 `chezmoi re-add ~/.config/nvim`.
+
+## Code review
+
+[tuicr](https://github.com/agavra/tuicr) is a code review TUI with vim keybindings: read a diff
+in the terminal, leave PR-style comments on it, then export them to GitHub, GitLab, Bitbucket or
+the clipboard. It comes from homebrew-core, so it installs with everything else; full option
+reference is in the upstream [`docs/CONFIG.md`](https://github.com/agavra/tuicr/blob/main/docs/CONFIG.md).
+
+`leader` is `,` rather than the stock `;`, which frees `;` for its vim meaning (repeat `f`/`t`
+forward) inside the diff view. `comment_vim` stays off: the comment box keeps readline bindings,
+so `Esc` is not overloaded while typing prose.
+
+`comment_types` sets the classification cycle to [Conventional
+Comments](https://conventionalcomments.org). The list is a full replacement rather than an
+addition — the configured types plus the always-available `None` are all that exist — and the
+first entry becomes the default, so the array is ordered by how often each label gets used, not
+alphabetically. Tab cycles through it in that same order. `[forge] comment_type_prefix = false`
+keeps the `[ISSUE]`/`[SUGGESTION]` tag out of comments submitted to a forge; the badge still shows
+in the TUI and the legend still ships with markdown exports, but GitHub and GitLab already render
+the label visually and the prefix only duplicates it.
+
+`theme` is pinned to `catppuccin-mocha` instead of the `theme_dark`/`theme_light` pair, so tuicr
+stays dark even when Ghostty follows the system into light mode — a deliberate difference from
+the terminal, which does track appearance. `transparent_background = false` goes with it: panels
+paint the theme's own background rather than letting the terminal's show through, which keeps the
+diff gutters readable against Mocha.
 
 ## Agent setup
 
