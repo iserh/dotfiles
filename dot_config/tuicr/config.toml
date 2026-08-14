@@ -19,4 +19,4 @@ comment_types = [
 ]
 
 [forge]
-comment_type_prefix = false
+comment_type_prefix = true

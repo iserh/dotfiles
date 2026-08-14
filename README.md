@@ -209,10 +209,10 @@ so `Esc` is not overloaded while typing prose.
 Comments](https://conventionalcomments.org). The list is a full replacement rather than an
 addition — the configured types plus the always-available `None` are all that exist — and the
 first entry becomes the default, so the array is ordered by how often each label gets used, not
-alphabetically. Tab cycles through it in that same order. `[forge] comment_type_prefix = false`
-keeps the `[ISSUE]`/`[SUGGESTION]` tag out of comments submitted to a forge; the badge still shows
-in the TUI and the legend still ships with markdown exports, but GitHub and GitLab already render
-the label visually and the prefix only duplicates it.
+alphabetically. Tab cycles through it in that same order. `[forge] comment_type_prefix` is left at
+its default `true`, so submitted comments carry the `[ISSUE]`/`[SUGGESTION]` tag in the body — the
+label survives in the forge's own UI, in notification emails, and for anyone reading the thread
+without the legend to hand.
 
 `theme` is pinned to `catppuccin-mocha` instead of the `theme_dark`/`theme_light` pair, so tuicr
 stays dark even when Ghostty follows the system into light mode — a deliberate difference from
