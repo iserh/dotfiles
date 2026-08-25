@@ -1,4 +1,6 @@
-theme = "catppuccin-mocha"
+theme_dark = "catppuccin-mocha"
+theme_light = "catppuccin-latte"
+appearance = "system"
 leader = ","
 comment_vim = false
 show_file_list = true

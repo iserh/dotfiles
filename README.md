@@ -214,11 +214,14 @@ its default `true`, so submitted comments carry the `[ISSUE]`/`[SUGGESTION]` tag
 label survives in the forge's own UI, in notification emails, and for anyone reading the thread
 without the legend to hand.
 
-`theme` is pinned to `catppuccin-mocha` instead of the `theme_dark`/`theme_light` pair, so tuicr
-stays dark even when Ghostty follows the system into light mode — a deliberate difference from
-the terminal, which does track appearance. `transparent_background = false` goes with it: panels
-paint the theme's own background rather than letting the terminal's show through, which keeps the
-diff gutters readable against Mocha.
+`theme_dark`/`theme_light` are set to `catppuccin-mocha`/`catppuccin-latte` with `appearance =
+"system"`, the same Catppuccin flavours Ghostty switches between, so the review TUI follows the
+system into light mode along with the terminal. The pair and `appearance` only take effect
+together: setting the single `theme` key, or only one half of the pair, pins the theme and makes
+tuicr print a warning that the appearance setting was ignored. Detection is an OSC 11 background
+query, so it needs a terminal that answers one — Ghostty does. `transparent_background = false`
+keeps panels painting their own background instead of letting the terminal's show through, so the
+diff gutters stay readable in either flavour.
 
 ## Agent setup
 
