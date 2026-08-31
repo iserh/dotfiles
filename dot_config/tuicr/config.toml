@@ -4,6 +4,7 @@ appearance = "system"
 leader = ","
 comment_vim = false
 show_file_list = true
+single_file_view = true
 transparent_background = false
 no_update_check = true
 

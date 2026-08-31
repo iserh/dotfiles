@@ -205,6 +205,11 @@ reference is in the upstream [`docs/CONFIG.md`](https://github.com/agavra/tuicr/
 forward) inside the diff view. `comment_vim` stays off: the comment box keeps readline bindings,
 so `Esc` is not overloaded while typing prose.
 
+`single_file_view = true` starts every review in the single-file view that `:focus` (`:f`) would
+otherwise have to be typed to reach — one file on screen at a time, `j`/`k` walking across files
+and `]`/`[` across hunks, rather than one long scroll through the whole diff. `show_file_list`
+stays on alongside it, so the tree is still there for jumping between files out of order.
+
 `comment_types` sets the classification cycle to [Conventional
 Comments](https://conventionalcomments.org). The list is a full replacement rather than an
 addition — the configured types plus the always-available `None` are all that exist — and the
