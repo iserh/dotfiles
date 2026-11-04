@@ -17,6 +17,7 @@ fi
 
 # uv, and anything else installed per-user
 path=("$HOME/.local/bin" $path)
+path=("$HOME/.opencode/bin" $path)
 
 export NVM_DIR="$HOME/.nvm"
 
